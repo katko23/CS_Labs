@@ -1,55 +1,37 @@
-# The title of the work
+package CS.Classical_Cipher;
 
-### Course: Cryptography & Security
-### Author: Coșeru Cătălin
+import java.security.Key;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
-----
+public class ClassicalCiphers {
 
-## Theory
-I passed all the theory in the course, but a small reminder:
-
-&ensp;&ensp;&ensp; Cryptography consists a part of the science known as Cryptology. The other part is Cryptanalysis. There are a lot of different algorithms/mechanisms used in Cryptography, but in the scope of these laboratory works the students need to get familiar with some examples of each kind.
-
-&ensp;&ensp;&ensp; First, it is important to understand the basics so for the first task students will need to implement a classical and relatively simple cipher. This would be the Caesar cipher which uses substitution to encrypt a message.
-
-&ensp;&ensp;&ensp; In it's simplest form, the cipher has a key which is used to substitute the characters with the next ones, by the order number in a pre-established alphabet. Mathematically it would be expressed as follows:
-
-$em = enc_{k}(x) = x + k (mod \; n),$
-
-$dm = dec_{k}(x) = x + k (mod \; n),$
-
-where:
-- em: the encrypted message,
-- dm: the decrypted message (i.e. the original one),
-- x: input,
-- k: key,
-- n: size of the alphabet.
-
-&ensp;&ensp;&ensp; Judging by the encryption mechanism one can conclude that this cipher is pretty easy to break. In fact, a brute force attack would have __*O(nm)*__ complexity, where __*n*__ would be the size of the alphabet and __*m*__ the size of the message. This is why there were other variations of this cipher, which are supposed to make the cryptanalysis more complex.
+    private interface Ciphers{
+        public String encryptMessage(final String message);
 
 
+        public String decryptMessage(final String encryptedMessage);
 
-## Objectives:
+    }
 
-* Get familiar with the basics of cryptography and classical ciphers.
+    public class CaesarCipher implements Ciphers
+    {
 
-* Implement 4 types of the classical ciphers:
-    - Caesar cipher with one key used for substitution (as explained above),
-    - Caesar cipher with one key used for substitution, and a permutation of the alphabet,
-    - Vigenere cipher,
-    - Playfair cipher.
+        private int substitutionKey = 1;
 
 
-## Implementation description
-#### Caesar Cipher
-* The Caesar Cipher technique is one of the earliest and simplest methods of encryption technique. It’s simply a type of substitution cipher, i.e., each letter of a given text is replaced by a letter with a fixed number of positions down the alphabet. For example with a shift of 1, A would be replaced by B, B would become C, and so on. The method is apparently named after Julius Caesar, who apparently used it to communicate with his officials.
+        public CaesarCipher(final int substitutionKey)
+        {
+            if((2<=substitutionKey) && (substitutionKey<=25)){
+                this.substitutionKey = substitutionKey - 1;
+            } else {
+                System.out.println("Cheie gresita, alegeti din intervalul 2 .. 25 ");
+            }
 
+        }
 
-* **Encrypt**
-
-    In order to encrypt, I allowed the choice of a key in the range 0 .. 26, to then shift the IDs of each character to another. Thus, in order to have both Upper and Lower case characters, it was necessary to do an if and control the letters in the message. Also, due to the use of ASCII codes, it was necessary to decrease the index with the ASCII code of the character a.
-```
-public String encryptMessage(final String message)
+        public String encryptMessage(final String message)
         {
             String encryptedMess = "";
             for(int i=0;i<=message.length()-1;i++){
@@ -65,13 +47,8 @@ public String encryptMessage(final String message)
 
             return encryptedMess;
         }
-```
 
-* **Decrypt**
-
-    Decryption is like encryption, only that instead of adding the substitution key, it subtracts it.
-```
-public String decryptMessage(final String encryptedMessage)
+        public String decryptMessage(final String encryptedMessage)
         {
             String decryptedMess = "";
             for(int i=0;i<=encryptedMessage.length()-1;i++){
@@ -86,22 +63,50 @@ public String decryptMessage(final String encryptedMessage)
 
             return decryptedMess;
         }
-```
 
-#### Caesar Cipher with Permutation
-* As in the case of the Caesar cipher, here the substitution takes place with a certain key, after which a word is taken as permutationKey and based on it the alphabet is permuted. Thus, the letters of the word are placed at the beginning of the alphabet, neglecting the letters that are repeated.
+    }
+
+    public class CaesarPerCipher implements Ciphers
+    {
+        // Some state variables if needed.
+
+        private int substitutionKey = 0;
+        private String permutationKey = "";
+        private char[] language = new char[54];
 
 
-* **Initialization**
 
-    When the object is initialized, the alphabet is permuted. For this we include in a set the letters from the permutationKey, then all the letters from the initial alphabet.
+        public CaesarPerCipher(final int substitutionKey, final String permutationKey)
+        {
+            if((2<=substitutionKey) && (substitutionKey<=25)){
+                this.substitutionKey = substitutionKey - 1;
+            } else {
+                System.out.println("Cheie gresita, alegeti din intervalul 2 .. 25 ");
+            }
 
+            Set<Character> languageS = new LinkedHashSet<Character>();
 
-* **Encrypt**
+            String alf = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    The encryption takes place by replacing the letter id in the message with the new alphabet from the list. List created using set.
-```
-public String encryptMessage(final String message)
+            // facem substitutia :
+            alf = Make_Substitution();
+
+            //realizam permutarea prin inscrierea intr-un set si inscrierea in array
+            for(int i = 0; i < permutationKey.length(); i++){
+                languageS.add(permutationKey.charAt(i));
+            }
+
+            for(int i = 0; i < alf.length(); i++){
+                languageS.add(alf.charAt(i));
+            }
+            Object[] ltemp = languageS.toArray();
+
+            for(int i=0;i < ltemp.length;i++){
+                language[i] = (char) ltemp[i];
+            }
+        }
+
+        public String encryptMessage(final String message)
         {
             String encryptedMess = "";
             for(int i=0;i<=message.length()-1;i++){
@@ -118,13 +123,8 @@ public String encryptMessage(final String message)
 
             return encryptedMess;
         }
-```
 
-* **Decrypt**
-
-The encryption takes place by replacing the letter id in the message with the new alphabet from the list.
-```
-public String decryptMessage(final String encryptedMessage)
+        public String decryptMessage(final String encryptedMessage)
         {
             String decryptedMess = "";
             for(int i=0;i<=encryptedMessage.length()-1;i++){
@@ -140,15 +140,46 @@ public String decryptMessage(final String encryptedMessage)
 
             return decryptedMess;
         }
-```
-#### Vigenere Cipher
-* Because the Vigenere Cipher is also based on the character shift, only that each letter in the message is moved with the id of the letter in the key, it becomes more secure than the Caesar cipher.
 
-* **Encrypt**
+        private int Search_Letter(char c){
+            for (int i = 0; i< language.length; i++){
+                if(language[i] == c) return i;
+            }
+            return -1;
+        }
 
-  The encryption takes place by adding to the letter in the message, the id of the letter in the key, then the order 'a' or 'A' is subtracted due to the use of the ASCII code, so that at the end we make a mod 26, in order not to exceed the size maximum of the alphabet.
-```
-public String encryptMessage(final String message)
+        private String Make_Substitution(){
+            String alf = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            String alfn = "";
+
+            for(int i=0;i<=alf.length()-1;i++){
+                if(Character.isLowerCase(alf.charAt(i))){
+                    alfn = alfn + (char)(((int)alf.charAt(i) - (int)'a' + this.substitutionKey) % 26 + (int)'a');
+                }else if (Character.isUpperCase(alf.charAt(i))) {
+                    alfn = alfn + (char)(((int)alf.charAt(i) - (int)'A' + this.substitutionKey) % 26 + (int)'A');
+                }else {
+                    alfn = alfn + alf.charAt(i);
+
+                }
+            }
+
+            return alfn;
+        }
+    }
+
+    public class VigenereCipher implements Ciphers
+    {
+        // Some state variables if needed.
+
+        private String Key;
+
+
+        public VigenereCipher(final String Key)
+        {
+        this.Key = Key;
+        }
+
+        public String encryptMessage(final String message)
         {
             String encryptedMess = "";
             for(int i=0;i< message.length();i++){
@@ -175,13 +206,8 @@ public String encryptMessage(final String message)
 
             return encryptedMess;
         }
-```
 
-* **Decrypt**
-
-    When decrypting, it is taken into account that after encryption all the message is written with UpperCase characters, so it is necessary to write the message in ASCII, so the code of the character 'A' is subtracted from the letter code. Then there is again the difference between what we obtained and the id of the order letter mod key letter (i % length of key). Thus we obtain the value of the initial id, which if we add it to the ASCII code of the letter 'a', we obtain the encrypted message, only as in LowerCase.
-```
- public String decryptMessage(final String encryptedMessage)
+        public String decryptMessage(final String encryptedMessage)
         {
             String decryptedMess = "";
             for(int i=0;i< encryptedMessage.length();i++){
@@ -200,17 +226,42 @@ public String encryptMessage(final String message)
 
             return decryptedMess;
         }
-```
 
+    }
 
-#### Playfair Cipher
-* One of the more complicated numbers to implement, but just as easy to break is Playfair. It is based on the permutation of the alphabet according to a certain key, and according to the 5*5 matrix.
+    public class PlayfairCipher implements Ciphers
+    {
+        // Some state variables if needed.
 
-* **Encrypt**
+        private String key;
+        private char[][] keyMatrix = new char[5][5];
+        private char[] language = new char[26];
 
-    Encryption takes place by generating digraphs, as a rule, no digraph with 2 identical letters, and all digraphs consisting of 2 letters. Thus we get some gaps, which are filled with letters that are not often used in the language, in the code I wrote I use the letter x.
-```
- public String encryptMessage(final String message)
+        public PlayfairCipher(final String key)
+        {
+            this.key = key;
+
+            Set<Character> languageS = new LinkedHashSet<Character>();
+
+            String alf = "abcdefghijklmnopqrstuvwxyz";
+
+            for(int i = 0; i < key.length(); i++){
+                languageS.add(key.charAt(i));
+            }
+
+            for(int i = 0; i < alf.length(); i++){
+                languageS.add(alf.charAt(i));
+            }
+            Object[] ltemp = languageS.toArray();
+
+            for(int i=0;i < ltemp.length;i++){
+                language[i] = (char) ltemp[i];
+            }
+
+            System.out.println(language);
+        }
+
+        public String encryptMessage(final String message)
         {
             String encryptedMess = "";
             String[] digraph = new String[message.length()];
@@ -275,13 +326,8 @@ public String encryptMessage(final String message)
 
             return encryptedMess;
         }
-```
 
-* **Decrypt**
-
-  Decryption takes place using the same method as encryption, only that now the operations are reversed, it is checked if the letters of the digraph are on the same row, the column id is decreased by 1 (instead of increasing), if they are on the same column, the row index decreases by 1, and if both are different, the horizontal inversion of the column takes place.
-```
- public String decryptMessage(final String encryptedMessage)
+        public String decryptMessage(final String encryptedMessage)
         {
             String decryptedMess = "";
             String[] digraph = new String[encryptedMessage.length()];
@@ -322,9 +368,18 @@ public String encryptMessage(final String message)
             }
             return decryptedMess;
         }
-```
 
-## Conclusions / Screenshots / Results
-In the end, I can say that all the things related take place in the main function, actually representing a set of instructions, which must reproduce the realization of this laboratory. Besides that, I conclude that classical numbers and their implementation have a good impact on the understanding of cryptography.
+        private int[] Pos(char c){
+            for(int i=0;i< keyMatrix.length;i++){
+                for(int j=0;j< keyMatrix.length;j++){
+                    if (keyMatrix[i][j] == c){
+                        return new int[] {i,j};
+                    }
+                }
+            }
+            return new int[] {-1,-1};
+        }
 
-![img.png](img.png)
+    }
+
+}
