@@ -1,4 +1,4 @@
-package CS.Lab2;
+package CS.Block_Cipher;
 import javax.swing.*;
 import java.security.SecureRandom;
 import javax.crypto.Cipher;

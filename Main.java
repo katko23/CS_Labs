@@ -1,7 +1,6 @@
 package CS;
-import CS.Lab1.ClassicalCiphers;
-import CS.Lab1.ClassicalCiphers.*;
-import CS.Lab2.*;
+import CS.Block_Cipher.BlowFish;
+import CS.Stream_Cipher.RC4;
 
 public class Main {
 

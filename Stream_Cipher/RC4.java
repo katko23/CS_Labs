@@ -1,4 +1,4 @@
-package CS.Lab2;
+package CS.Stream_Cipher;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;

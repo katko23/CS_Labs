@@ -42,7 +42,7 @@ Without Blowfish, the AES algorithm (used today in most of the applications) wou
 
 ## Implementation description
 
-####RC4
+###RC4
 The idea and the whole realization, including what I did, I took from the given video: https://www.youtube.com/watch?v=wW3WOLX4itc
 In fact, it clearly explains how RC4 is made, and yet in general I took the elements from the pseudocode and translated them into Java.
 I also used array of bytes, for that it was necessary to transform from string to byte through getBytes, and vice versa through new String(), sometimes there is a bug during generation that makes the transfer operations from string to bytes and back erroneous. 
@@ -115,7 +115,7 @@ public byte[] encrypt(final String plaintext) throws UnsupportedEncodingExceptio
     }
 ```
 
-####BlowFish
+###BlowFish
 Sooo blowfish, I got into the idea and realization of this algorithm, but unfortunately I used a lot of implementations of key generation, of the javax.crypto package... 
 Also, the general problem was that after a vast research I realized how good are the implementations of others and, in relation to them, I wrote my own algorithm, based on some implementations from the given sources:
 
