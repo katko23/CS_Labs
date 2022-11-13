@@ -1,8 +1,7 @@
 package CS.Asymmetric_Cipher;
-import java.math.*;
-import java.util.*;
+import java.math.BigInteger;
 
-public class RSA {
+public class RSA_second_check {
 
     int p, q, n, z, d = 0, e, i;
     BigInteger msgback;
@@ -12,7 +11,7 @@ public class RSA {
             211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331,
             337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397};
 
-    public RSA()
+    public RSA_second_check()
     {
         // The number to be encrypted and decrypted
         int msg = 12;
@@ -58,13 +57,40 @@ public class RSA {
     public String encription(String message){
         String enc_mess = "";
         System.out.println("the value of d = " + d);
+        String c_temp = "";
         for(int i = 0; i < message.length(); i++) {
             int msg = message.charAt(i);
-            c = (Math.pow(msg, this.e)) % n;
-            enc_mess = enc_mess + String.valueOf((int)c) + ",";
+            if (0 <= msg && msg < 10){
+                c_temp = c_temp + "00" + msg;
+            }
+            else if (10 <= msg && msg < 100){
+                c_temp = c_temp + "0" + msg;
+            }
+            else {
+                c_temp = c_temp + msg;
+            }
+            if(i%6 == 1 || i == message.length()-1) {
+                long enc_c = Long.parseLong(c_temp);
+                c = (Math.pow(enc_c, this.e)) % n;
+                enc_mess = enc_mess + String.valueOf((int) c) + ",";
+                System.out.println(c_temp);
+                c_temp = "";
+            }
         }
         System.out.println("Encrypted message is : " + enc_mess);
         return enc_mess;
+    }
+
+    public static long powerMod(long base, long exp, long mod) {
+        long result = 1;
+        base %= mod;
+        while (exp > 0) {
+            if ((exp & 1) != 0)
+                result = (result * base) % mod;
+            exp >>= 1;
+            base = base * base % mod;
+        }
+        return result < 0 ? result + mod : result;
     }
 
     public String decription(String encr_mess){
@@ -89,3 +115,4 @@ public class RSA {
         return message;
     }
 }
+
