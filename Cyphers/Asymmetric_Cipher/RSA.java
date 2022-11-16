@@ -1,6 +1,5 @@
-package CS.Asymmetric_Cipher;
+package CS.Cyphers.Asymmetric_Cipher;
 import java.math.*;
-import java.util.*;
 
 public class RSA {
 
@@ -89,7 +88,4 @@ public class RSA {
         return message;
     }
 }
-<<<<<<< HEAD
-=======
 
->>>>>>> aaa280d7bd3cf1cbe71de4cc20fe6444bc02dfc9

@@ -1,4 +1,4 @@
-package CS.Asymmetric_Cipher;
+package CS.Cyphers.Asymmetric_Cipher;
 import java.math.BigInteger;
 
 public class RSA_second_check {

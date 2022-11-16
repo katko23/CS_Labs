@@ -1,9 +1,6 @@
-package CS.Stream_Cipher;
+package CS.Cyphers.Stream_Cipher;
 
 import java.io.UnsupportedEncodingException;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.stream.Collectors;
 
 public class RC4 {
     private final byte[] S = new byte[256];

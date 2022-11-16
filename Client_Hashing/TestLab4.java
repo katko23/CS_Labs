@@ -1,10 +1,9 @@
-package CS.Hashing;
-import CS.Asymmetric_Cipher.RSAUtil;
+package CS.Client_Hashing;
+import CS.Cyphers.Asymmetric_Cipher.RSAUtil;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
-import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;

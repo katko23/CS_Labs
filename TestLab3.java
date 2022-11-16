@@ -1,5 +1,5 @@
 package CS;
-import CS.Asymmetric_Cipher.RSA;
+import CS.Cyphers.Asymmetric_Cipher.RSA;
 
 public class TestLab3 {
 

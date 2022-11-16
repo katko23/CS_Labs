@@ -1,4 +1,4 @@
-package CS.Asymmetric_Cipher;
+package CS.Cyphers.Asymmetric_Cipher;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
