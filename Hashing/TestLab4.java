@@ -1,6 +1,5 @@
 package CS.Hashing;
-import CS.Asymmetric_Cipher.RSAUtil;
-
+import CS.Cyphers.Asymmetric_Cipher.RSAUtil;
 import javax.crypto.BadPaddingException;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
