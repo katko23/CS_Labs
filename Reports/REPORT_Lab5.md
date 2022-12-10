@@ -57,14 +57,17 @@ The code is :
 ```
 
 ###Authorization 
+
 The authorization in the given case consists in the control of the input data of the request. Thus, the username and the authorization token are taken, in case they coincide, the authorization takes place in the application, for the use of encryption methods with classic digits such as Caesar, Vigenere and Playfair.
     
 ![img.png](../Images_Screens/img_4.png)
+
 Thus in the request we have username, user_id (which is token_authorization), and already the necessary action such as encrypt / decrypt etc.
 
 
 
 ###Methods and Endpoints
+
 Each endpoint consists of creating a dictionary, from the payload of the request. After that, a search takes place in the DB, through which we obtain all the data about a certain user, thus we need the username, also for authorization, in the payload dictionary, we have a user_id, as I said before, this is a token_id of authorization received upon authentication. We also have an action that must be performed, in other words encryption or decryption. Next comes the message to be encrypted/decrypted and, of course, the substitution or permutation data used in encoding and decoding.
 
 ![img.png](../Images_Screens/img_5.png)
