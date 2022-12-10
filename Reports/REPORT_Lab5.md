@@ -22,6 +22,7 @@ Thanks to its simplicity, Basic authentication enjoys widespread support across 
 ## Implementation description
 
 ###General working
+
 I Begin by making a mysql database , and initialize it.
 
 * **MySQL**\
@@ -33,15 +34,19 @@ I Begin by making a mysql database , and initialize it.
   My authentication is not based on a secure channel, it's a simple theoretical authentication and authorization, which boils down to a token and the transmission of requests and data in the payload in json format.
 
 ###Authentification
+
 **Authentification**\
 Authentification takes place by using a username and a pass. the request having the following form:
+
 ![img.png](../Images_Screens/img_3.png)
+
 as a response, we get a hash value of the input token (if the username and pass coincide with those in the db.) The token is given upon registration and is kept in the DB, so its creation takes place in SignUp. 
 The servlet, that is, the function that takes place in the case of receiving a request post at the enpoint /signin is very simple, a query is made in the db, to obtain the data about the user with the given username. 
 In the code, everything is not very safe because I have no protection against sql injection , or man in the middle attack. 
 And if everything is verified, and the user is authenticated, then a json with user_id (as a token of the open session) is sent as a response.
 
 ###Hash_ID in other words Tokens_Authorization
+
 Tokens are generated when a new user is created, and are generated in the following way:
 The username and password are taken, then their value is hashed with SHA-256. The received hash is registered in the DB, and is taken as the authorization_token, in the case of authentication.
 
