@@ -29,6 +29,8 @@ public class ClassicalCrypto {
 			}
 			System.out.println("Caesar Encription");
 		}
+		else s_resp = "Error of Invalid token";
+
 		if(payload.get("user_id").equals(hash)) {
 			if(payload.get("action").equals("decript")) {
 				final int number_substitution = Integer.parseInt(payload.get("substitution"));
@@ -38,6 +40,7 @@ public class ClassicalCrypto {
 			}
 			System.out.println("Caesar Decription");
 		}
+		else s_resp = "Error of Invalid token";
 		return (s_resp);
 	}
 	
@@ -56,6 +59,8 @@ public class ClassicalCrypto {
 			}
 			System.out.println("Caesar Perm Encription");
 		}
+		else s_resp = "Error of Invalid token";
+
 		if(payload.get("user_id").equals(hash)) {
 			if(payload.get("action").equals("decript")) {
 				final int number_substitution = Integer.parseInt(payload.get("substitution"));
@@ -66,6 +71,7 @@ public class ClassicalCrypto {
 			}
 			System.out.println("Caesar Perm Decription");
 		}
+		else s_resp = "Error of Invalid token";
 		return (s_resp);
 	}
 	
@@ -83,6 +89,8 @@ public class ClassicalCrypto {
 			}
 			System.out.println("Vigenere Encription");
 		}
+		else s_resp = "Error of Invalid token";
+		
 		if(payload.get("user_id").equals(hash)) {
 			if(payload.get("action").equals("decript")) {
 				final String permutation = payload.get("permutation");
@@ -92,6 +100,7 @@ public class ClassicalCrypto {
 			}
 			System.out.println("Vigenere Decription");
 		}
+		else s_resp = "Error of Invalid token";
 		return (s_resp);
 	}
 	
@@ -109,6 +118,8 @@ public class ClassicalCrypto {
 			}
 			System.out.println("Vigenere Encription");
 		}
+		else s_resp = "Error of Invalid token";
+
 		if(payload.get("user_id").equals(hash)) {
 			if(payload.get("action").equals("decript")) {
 				final String permutation = payload.get("permutation");
@@ -118,6 +129,8 @@ public class ClassicalCrypto {
 			}
 			System.out.println("Vigenere Decription");
 		}
+		else s_resp = "Error of Invalid token";
+
 		return (s_resp);
 	}
 }
