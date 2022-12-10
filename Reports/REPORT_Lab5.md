@@ -21,7 +21,7 @@ Thanks to its simplicity, Basic authentication enjoys widespread support across 
 
 ## Implementation description
 
-###General working
+### General working
 
 I Begin by making a mysql database , and initialize it.
 
@@ -33,7 +33,7 @@ I Begin by making a mysql database , and initialize it.
 * **Authentication & Authorization**
   My authentication is not based on a secure channel, it's a simple theoretical authentication and authorization, which boils down to a token and the transmission of requests and data in the payload in json format.
 
-###Authentification
+### Authentification
 
 **Authentification**\
 Authentification takes place by using a username and a pass. the request having the following form:
@@ -45,7 +45,7 @@ The servlet, that is, the function that takes place in the case of receiving a r
 In the code, everything is not very safe because I have no protection against sql injection , or man in the middle attack. 
 And if everything is verified, and the user is authenticated, then a json with user_id (as a token of the open session) is sent as a response.
 
-###Hash_ID in other words Tokens_Authorization
+### Hash_ID in other words Tokens_Authorization
 
 Tokens are generated when a new user is created, and are generated in the following way:
 The username and password are taken, then their value is hashed with SHA-256. The received hash is registered in the DB, and is taken as the authorization_token, in the case of authentication.
@@ -61,7 +61,7 @@ The code is :
 		WriteDB(username , pass, s_encodedhash);
 ```
 
-###Authorization 
+### Authorization 
 
 The authorization in the given case consists in the control of the input data of the request. Thus, the username and the authorization token are taken, in case they coincide, the authorization takes place in the application, for the use of encryption methods with classic digits such as Caesar, Vigenere and Playfair.
     
@@ -71,7 +71,7 @@ Thus in the request we have username, user_id (which is token_authorization), an
 
 
 
-###Methods and Endpoints
+### Methods and Endpoints
 
 Each endpoint consists of creating a dictionary, from the payload of the request. After that, a search takes place in the DB, through which we obtain all the data about a certain user, thus we need the username, also for authorization, in the payload dictionary, we have a user_id, as I said before, this is a token_id of authorization received upon authentication. We also have an action that must be performed, in other words encryption or decryption. Next comes the message to be encrypted/decrypted and, of course, the substitution or permutation data used in encoding and decoding.
 
